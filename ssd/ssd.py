@@ -92,9 +92,12 @@ class SSD(HybridBlock):
                  anchor_alloc_size=128, ctx=mx.cpu(),
                  norm_layer=nn.BatchNorm, norm_kwargs=None, **kwargs):
         super(SSD, self).__init__(**kwargs)
+        # norm_kwargs是一个字典 作用未知
         if norm_kwargs is None:
             norm_kwargs = {}
         if network is None:
+            # ratios [list]=Aspect ratios 是每个output layer的anchors的横纵比
+            # 长度必须匹配output layer的个数
             num_layers = len(ratios)
         else:
             num_layers = len(features) + len(num_filters) + int(global_pool)
