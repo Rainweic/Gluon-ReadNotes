@@ -36,6 +36,11 @@ class SSD(HybridBlock):
         model can have ``sizes = [30, 60, 90]``, and it converts to `[30, 60]` and
         `[60, 90]` for the two stages, respectively. For more details, please refer
         to original paper.
+        ---------------
+        anchor boxes的size, 是由float组成的[]，并且元素按递增顺序存放。
+        sizes的长度必须是layers+1
+        比如，two stage的SSD，sizes=[30, 60, 90]，会转化为[30, 60], [60, 90]
+        ---------------
     ratios : iterable of list
         Aspect ratios of anchors in each output layer. Its length must be equals
         to the number of SSD output layers.
@@ -92,7 +97,7 @@ class SSD(HybridBlock):
                  anchor_alloc_size=128, ctx=mx.cpu(),
                  norm_layer=nn.BatchNorm, norm_kwargs=None, **kwargs):
         super(SSD, self).__init__(**kwargs)
-        # norm_kwargs是一个字典 作用未知
+        # norm_kwargs是一个字典 作用未知 Batch normalization
         if norm_kwargs is None:
             norm_kwargs = {}
         if network is None:
